@@ -1,57 +1,33 @@
-# FPGA-Verilog
-Projects implemented in Spartan3 and Spartan3e for the Digital Systems class which include:
+# MPU6050_driver
+Driver implemented in C for MPU6050 using ST's STM32F401RE Nucleo board.
 
-- LED Driver for Spartan3 FPGA - Lab01
-- UART implementation - Lab02
-- VGA Driver - Lab03
-- LCD driver for Spartan3e FPGA - Lab04
+MPU6050 is an 3-axis (x,y,z) accelerometer and gyroscope, which also includes a temperature sensor.
+The I2C bus is used to communicate with it.
 
-The following tools and manuals were used: 
-- Xillinx ISE Design Suite 14.7
-- Manual of Spartan3 FPGA (https://www.xilinx.com/support/documentation/boards_and_kits/ug130.pdf)
-- Manual of Spartan3e FPGA (https://www.xilinx.com/support/documentation/boards_and_kits/ug230.pdf)
+The pin configuration is as follows:
+- VCC - Supply
+- GND - Ground
+- SCL - I2C Clock
+- SDA - I2C Data
+- XCL - I2C Slave clock (in case another sensor is connected with the MPU6050)
+- XDA - I2C Slave Data (in case another sensor is connected with the MPU6050)
+- AD0 - Address select
+- INT - Interrupt
 
-Each small project has the source code, the UCF file required for the connectivity and the final bitfile of the
-each project.
+Folders:
+- **/Driver_code** folder for the driver implementation source code and more details.
+- **/MPU6050_example** folder there is an example that can be ported directly to STM32IDE.
+- **/Doc** has the main manuals used for the MPU6050 and images for the Readme.
 
-Projects are split into parts basen on each assignment's requirement of each part and in each lab
-assignment we have a report of the whole project.
+For now the current operations are supported:
+- Read/Write operations on the I2C bus (generalised)
+- Reading values from the accelerometer/gyroscope/temperature sensors
+- Configuring sampling rate and accuracy
+- Setting different power modes (low_power, sleep, power)
+- Interrupt generation and handling
+- Self Test Routine (calibration method)
+- Pitch/Roll angle calculation
 
-Generally the last part will have the full project.
-
-## LED Driver
-The LED Driver was implemented in the Spartan3 FPGA, on the onboard LED Display.
-
-The project was to implement 2 things:
-- Display a static sequence and then rotate it at the press of a button (Part3 folder)
-- Display a static sequence which rotates at a set frequency (Part4 folder)
-
-The seqeunce was a simple "0123456789ABCDEF" message.
-
-## UART Implementation
-The UART implementation was only tested in the RTL department without any practical 
-testing on any FPGA.
-
-It implements the UART transfer hardware-protocol with both a receiver and a trasmitter
-which have variable BaudRates which we can set ourselves.
-
-We implement also system flags in case of framing errors, parity errors or some other case.
-
-## VGA Driver
-The VGA driver was implemented in Spartan3.
-
-It basicaly is an VGA driver for 640x480 resolution. But in our case due to memory limitations
-we implement 640x480 driver which displays an 128x96 image in RGB222 (Basically each color channel is on or off).
-
-For now a static image is displayed and no video is produced but this could be easily changed.
-
-The data to be diplayed is stored in a chunk of BRAM in Spartan3.
-
-## LCD Driver
-The LCD Driver was implemented in Spartan3e's onboard LCD screen.
-
-We initialize, configure and display a message with a cursor on the LCD screen.
-
-We display yet again, a message of "0123456789abcde" and a cursor in the last position.
-
-The cursor blinks every 1s
+Part of the driver is based on the implementation of these 2 repos:
+ - https://github.com/sinadarvi/SD_HAL_MPU6050
+ - https://github.com/leech001/MPU6050
