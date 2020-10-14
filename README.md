@@ -4,6 +4,10 @@ Driver implemented in C for MPU6050 using ST's STM32F401RE Nucleo board.
 MPU6050 is an 3-axis (x,y,z) accelerometer and gyroscope, which also includes a temperature sensor.
 The I2C bus is used to communicate with it.
 
+<p align="left">
+  <img src="Doc/img1.jpg" width="400">
+</p>
+
 The pin configuration is as follows:
 - VCC - Supply
 - GND - Ground
